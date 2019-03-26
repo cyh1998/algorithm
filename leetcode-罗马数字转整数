@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int romanToInt(string s) {
+        map<char,int> arr;
+        arr['I'] = 1;
+        arr['V'] = 5;
+        arr['X'] = 10;
+        arr['L'] = 50;
+        arr['C'] = 100;
+        arr['D'] = 500;
+        arr['M'] = 1000;
+        int num = 0;
+        int size = s.size();
+        for(int i = 0;i<size;i++){
+            if(arr[s[i]] < arr[s[i+1]]){
+                num -= arr[s[i]]; 
+            }
+            else{
+                num += arr[s[i]];
+            }
+        }
+        return num;
+    }
+};
