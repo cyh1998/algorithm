@@ -1,0 +1,27 @@
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        if(x < 0) return false;
+        else{
+            int arr[32];
+            int i,j,k,key = 1;
+            for(i=0;;i++){
+                if(x==0) break;
+                arr[i] = x%10;
+                x = x/10;
+            }
+            j = 0;
+            k = i-1;
+            while(j<k){
+                if(arr[j]!=arr[k]){
+                    key = 0;
+                    break;
+                }
+                j++;
+                k--;
+            }  
+            if(key==1) return true;
+            else return false;
+        }
+    }
+};
