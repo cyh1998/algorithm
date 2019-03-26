@@ -1,0 +1,41 @@
+c:
+int* twoSum(int* nums, int numsSize, int target)
+{
+    static int a[2]={0};
+	for (int i = 0; i < numsSize - 1; i++)
+	{
+		for (int j = i+1; j < numsSize; j++)
+		{
+			if (nums[i] + nums[j] == target)
+			{
+				a[0] = i;
+				a[1] = j;
+				return a;
+			}
+		}
+	}
+	return 0;
+}
+
+c++：
+class Solution { 
+    public: vector<int> twoSum(vector<int>& nums, int target) { 
+        vector<int> res;
+        map<int ,int> box ;
+        int key , tmp , numsSize = nums.size();
+        for (int i = 0; i <numsSize ; ++i) {
+            key = target - nums.at(i); 
+            box.insert(pair<int , int>(key , i));
+        } 
+        for (int i = 0; i <numsSize ; ++i) { 
+            tmp = nums.at(i); 
+            cout<<box.count(tmp); 
+            if(box.count(tmp)&&i!=box[tmp]){ 
+                res.push_back(i); 
+                res.push_back(box[tmp]); 
+                return res;
+            } 
+        }
+        return res; 
+    } 
+};
