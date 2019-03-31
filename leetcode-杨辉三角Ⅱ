@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<int> getRow(int rowIndex) {
+        if(rowIndex==0){
+            vector<int> res(1,1);
+            return res;
+        }
+        if(rowIndex==1){
+            vector<int> res(2,1);
+            return res;
+        }
+        vector<int> res;
+        vector<int> test(2,1);
+        for(int i = 2;i<=rowIndex;i++){
+            res.push_back(1);
+            res.push_back(1);
+            for(int j = 1;j<i;j++){
+                res.insert(res.begin()+j,test[j-1]+test[j]);
+            }
+            test = res;
+            res.clear();
+        }
+        return test;
+    }
+};
