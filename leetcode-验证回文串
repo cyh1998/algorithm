@@ -1,0 +1,20 @@
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        if(s.length()==0) return true;
+        transform(s.begin(),s.end(),s.begin(),::tolower);
+        int begin = 0;
+        int end = s.length()-1;
+        while(begin<end){
+            while((s[begin] < 'a'|| s[begin] > 'z') && (s[begin] < '0'|| s[begin] > '9')){
+                begin++;
+                if(begin>end) return true;
+            }
+            while((s[end] < 'a'|| s[end] > 'z') && (s[end] < '0'|| s[end] > '9')) end--;
+            if(s[begin]!=s[end]) return false;    
+            begin++;
+            end--;
+        }
+        return true;
+    }
+};
