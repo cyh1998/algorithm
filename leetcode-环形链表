@@ -1,0 +1,37 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+ 
+//使用map将节点地址与访问的次数关联，如果有一个地址访问了超过1一次，说明链表中存在环。
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        map<ListNode*,int> mymap;
+        ListNode *p = head;
+        while(p!=NULL){
+            if(++mymap[p]>1) return true;
+            p = p -> next;
+        }
+        return false;
+    }
+};
+
+//使用两个指针，一个指针每次只走一步，另一个指针每次走两步。若快指针碰到慢指针，则说明链表中存在环。
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        ListNode* fast = head;
+        ListNode* slow = head;
+        while(fast&&fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+            if(fast==slow) return true;
+        }
+        return false;
+    }
+};
