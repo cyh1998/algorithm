@@ -1,0 +1,16 @@
+class Solution {
+public:
+    string convertToTitle(int n) {
+        string res;
+        char test;
+        while(n>0){
+            if(n%26==0) test = 'Z';
+            else{
+                test = ((n-1)%26)+'A';
+            }
+            res = test + res;
+            n = (n-1)/26;
+        }
+        return res;
+    }
+};
