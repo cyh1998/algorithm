@@ -22,3 +22,34 @@ public:
         return count;
     }
 };
+
+
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        vector<int> data;
+        int s = nums.size();
+        int l;
+        if(s<k){
+            l = k%nums.size();
+            for(int i = l+1;i<nums.size();i++){
+            data.push_back(nums[i]);
+            }
+            for(int i = 0;i<l+1;i++){
+                data.push_back(nums[i]);
+            }
+        }else{
+            l = nums.size()-k;
+            for(int i = l;i<nums.size();i++){
+            data.push_back(nums[i]);
+            }
+            for(int i = 0;i<l;i++){
+                data.push_back(nums[i]);
+            }
+        }
+        //printf("%d",l);
+        
+        nums = data;
+    }
+};
+
