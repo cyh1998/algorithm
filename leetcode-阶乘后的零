@@ -1,0 +1,14 @@
+//阶乘后的零是因为5乘以一个偶数的结果，所以5的个数，决定了阶乘后零的个数。
+//求阶乘可分解的数字5的数量
+class Solution {
+public:
+    int trailingZeroes(int n) {
+        int count = 0;
+        int num = n;
+        while(num>=5){
+            num /= 5;
+            count += num;
+        }
+        return count--;
+    }
+};
