@@ -1,0 +1,31 @@
+//1.将数据分组，前后互换
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        vector<int> data;
+        int s = nums.size();
+        int l;
+        if(s<k) l = s-k%s; 
+        else l = s-k;
+        for(int i = l;i<s;i++){
+            data.push_back(nums[i]);
+        }
+        for(int i = 0;i<l;i++){
+            data.push_back(nums[i]);
+        }
+        nums = data;
+    }
+};
+
+//2.reverse前半部分、后半部分、全部
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        int n = nums.size() - 1, t = k % nums.size();
+        reverse (nums.begin(), nums.end());
+        reverse (nums.begin(), nums.begin() + t);
+        reverse (nums.begin() + t, nums.begin() + nums.size());
+    }
+};
+
+//3.数组向右移动一位，移动k次
