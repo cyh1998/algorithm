@@ -1,0 +1,14 @@
+class Solution {
+public:
+    uint32_t reverseBits(uint32_t n) {
+        uint32_t res=0;
+        int i=32;
+        while(i--)
+        {
+            res = res<<1;  //二进制数的位移
+            res+=n&1;      //想要获取一个二进制数的最低位，让这个数和1 进行&操作，都会得到这个数的最低位，即（n&1）
+            n = n>>1;
+        }
+        return res;
+    }
+};
