@@ -18,4 +18,33 @@ public:
 };
 
 //记忆化搜索
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int n = nums.size();
+        if(n==0) return 0;
+        vector<int> res(n,-1);
+        //int r = 0;
+        return dfs(nums,res,n-1);
+    }
+    
+    int dfs(vector<int>& nums,vector<int>& res,int n){
+        if(n==0){
+            res[0] = nums[0];
+            return res[0];
+        }
+        if(n==1){
+            res[1] = max(nums[0],nums[1]);
+            return res[1];
+        }
+        if(res[n]!=-1) return res[n];
+        res[n] = max(dfs(nums,res,n-1),nums[n]+dfs(nums,res,n-2));
+        return res[n];
+    }
+};
 
+
+//动态规划(dp)与记忆化搜索(sm)的小结
+//记忆化搜索：设置一个全局的数组，初始化全为-1，用来来保存子问题的答案
+//           利用递归，自顶向下的求解答案，当子问题的答案不为-1时，直接返回当前最优解，减少计算
+//动态规划：利用dp方程，自下而上的递推，求解答案最后的答案
