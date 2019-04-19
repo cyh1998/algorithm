@@ -1,0 +1,24 @@
+//暴力法
+class Solution {
+public:
+    int countPrimes(int n) {
+        if(n<2) return 0;
+        if(n==2) return 0;
+        if(n==3) return 1;
+        int count = 2;
+        for(int i = 4;i<n;i++){
+            count++;
+            int num = int(sqrt(i));
+            for(int j = 2;j<=num;j++){
+                if(i%j==0){
+                    count--;
+                    break;
+                }
+            }            
+        }
+        return count;
+    }
+};
+
+//厄拉多塞筛法
+//创建一个大小为n的数组，存放1-n，令a[i]=i，从2开始，去除2的倍数的数，将其a[]的值置为0，然后3...直到n，剩下没有置位0的数就是小于n的所有质数
