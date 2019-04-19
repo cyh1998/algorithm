@@ -1,0 +1,21 @@
+//set容器存放每一次计算的结果，通过find()判断是否有循环出现
+class Solution {
+public:
+    bool isHappy(int n) {
+        set<int> arr;
+        while(n!=1){
+            arr.insert(n);
+            int num = 0;
+            while(n!=0){
+                num += pow(n%10,2);
+                n /= 10; 
+            }
+            if(arr.find(num)!=arr.end()) return false;
+            n = num;
+        }
+        return true;
+    }
+};
+
+//经过测试，若不是快乐数，那么不超过8次就会进入循环
+//可直接循环8次结束
