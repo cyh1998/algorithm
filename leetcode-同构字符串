@@ -1,0 +1,38 @@
+//利用两个数组存放s->t与t->s的映射，然后再加上条件判断
+class Solution {
+public:
+    bool isIsomorphic(string s, string t) {
+        int aTob[256] = {0};
+        int bToa[256] = {0};
+        int l = s.size();
+        for(int i =0; i<l; ++i)
+        {
+            if(aTob[s[i]] == 0) aTob[s[i]] = t[i];
+            if(bToa[t[i]] == 0) bToa[t[i]] = s[i];
+            if(aTob[s[i]] != t[i] || bToa[t[i]] != s[i]) return false;
+        }
+        return true;
+    }
+};
+
+//利用unordered_map/map存放s->t与t->s的映射，然后再加上条件判断
+//说明：map不允许元素重复！！！
+//     map中的元素按照红黑数存储，内部会对元素进行排序，进行中序遍历会得到有序元素。
+//     unordered_map的内部不会根据key的大小进行排序，所以unordered_map是无序的。
+class Solution {
+public:
+    bool isIsomorphic(string s, string t) {
+        unordered_map<int,int> map1,map2;
+        for(int i=0;i<s.size();i++)
+        {
+            map1[s[i]]=t[i];
+            map2[t[i]]=s[i];
+        }
+        for(int i=0;i<s.size();i++)
+            if(map1[s[i]]!=t[i] || map2[t[i]]!=s[i])
+                return false;
+        return true;
+    }
+};
+
+//说明：int类型数组的下标以及值均可以是char类型！！！
