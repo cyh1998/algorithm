@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int longestRepeatingSubstring(string S) {
+        int max = 0;
+        int count;
+        for(int i = 1;i<S.length();i++){
+            count = 0;
+            for(int j = 0;j<S.length()-i;j++){
+                if(S[j]==S[i+j]) count++;
+                else{
+                    count = 0;
+                }
+                if(count>max) max = count;
+            }
+            count = 0;
+        }
+        //if(S.size()==1) return 1;
+        //char* p1 = &S[0];
+        //char* p2 = &S[1];
+        // while(p1!=NULL){
+        //     count = 0;
+        //     while(p2!=NULL)
+        //         if(*p1==*p2){
+        //             p1++;
+        //             p2++;
+        //             count++;
+        //         }else p2++;
+        //     }
+        //     p1++;
+        //     p2 = p1;
+        //     p2++;
+        //     if(count>max) max = count;
+        // }
+        return max;
+    }
+};
