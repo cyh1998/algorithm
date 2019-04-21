@@ -25,3 +25,29 @@ public:
 
 
 
+class Solution {
+public:
+    int longestRepeatingSubstring(string S) {
+        if(S.size()==1) return 1;
+        int max = 0;
+        char* p1 = &S[0];
+        char* p2 = &S[1];
+        int count;
+        while(p1!=NULL){
+            count = 0;
+            while(p2!=NULL){
+                if(*p1==*p2){
+                    p1++;
+                    p2++;
+                    count++;
+                }else p2++;
+            }
+            p1++;
+            p2 = p1;
+            p2++;
+            if(count>max) max = count;
+        }
+        return max;
+    }
+};
+
