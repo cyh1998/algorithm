@@ -1,0 +1,27 @@
+class Solution {
+public:
+    bool containsNearbyDuplicate(vector<int>& nums, int k) {
+        if(nums.size()==0 || nums.size()==1 || k==0) return false;
+        multimap<int,int> arr;
+        for(int i= 0;i<nums.size();i++){
+            arr.insert(pair<int,int>(nums[i],i));
+        }
+        multimap<int,int>::iterator iter1 = arr.begin();
+        multimap<int,int>::iterator iter2 = arr.begin();
+        iter2++;
+        while(iter2!=arr.end()){
+            if((iter1->first==iter2->first)&&(iter2->second-iter1->second<=k)) return true;
+            iter1++;
+            iter2++;
+        }
+        return false;
+    }
+};
+
+
+//小结：
+//map，multimap，unordered_map,hash_map的区别与使用
+//1.unordered_map和hash_map的内部结构是哈希表，数据是无序的，查询平均时间是O(1)
+//  只要访问而不需要顺序，可以选择哈希表，一般使用unordered_map
+//2.map和multimap的内部结构是R-B-tree，数据是有序的，按照key排序
+//  map不允许数据重复，multimap允许重复数据
