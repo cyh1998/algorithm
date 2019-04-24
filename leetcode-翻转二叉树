@@ -1,0 +1,27 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        if(root==NULL) return NULL;
+        TreeNode* test = NULL;
+        retree(root,test);
+        return root;
+    }
+    
+    void retree(TreeNode* root,TreeNode* t) {
+        if(root==NULL||(root->left==NULL&&root->right==NULL)) return ;
+        t=root->left;
+        root->left=root->right;
+        root->right=t;
+        retree(root->left,t);
+        retree(root->right,t);
+    }
+};
