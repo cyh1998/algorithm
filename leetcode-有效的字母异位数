@@ -37,7 +37,7 @@ public:
     }
 };
 
-//法二优化
+//法二简写
 class Solution {
 public:
     bool isAnagram(string s, string t) {
