@@ -1,0 +1,53 @@
+//法一：sort，判断下标与数值是否相等
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        for(int i = 0;i<nums.size();i++){
+            if(nums[i]!=i) return i;
+        }
+        return nums.size();
+    }
+};
+
+//法二：求和，与1-n的和相减，差为缺少的数
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {       
+        int sum = 0;
+        int num = 0;
+        for(int i = 0;i<nums.size();i++){
+            sum += nums[i];
+        }
+        for(int i = 1;i<=nums.size();i++){
+            num += i;
+        }
+        return num-sum;
+    }
+};
+
+//法三：边加边减
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int sum = 0;
+        int i;
+        for(i = 0;i<nums.size();i++){
+            sum += nums[i]-i;
+        }
+        return i-sum;
+    }
+};
+
+//法四：异或运算符
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int sum = nums.size();
+        for (int i = 0; i < nums.size(); ++i){
+            sum ^= nums[i];
+            sum ^= i;
+        }
+        return sum;
+    }
+};
