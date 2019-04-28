@@ -1,0 +1,25 @@
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        //题目要求不能拷贝额外的数组
+        // vector<int> res;
+        // int num = 0;
+        // for(int i = 0;i<nums.size();i++){
+        //     if(nums[i]==0) num++;
+        //     else res.push_back(nums[i]);
+        // }
+        // for(int i = 1;i<=num;i++){
+        //     res.push_back(0);
+        // }
+        // nums = res;
+        
+        //正确的解法
+        int j = 0;
+        for(int i = 0;i<nums.size();i++){
+            if(nums[i]!=0) nums[j++] = nums[i];
+        }
+        while(j<nums.size()){
+            nums[j++] = 0;
+        }
+    }
+};
