@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int num = 0,k = 0,i,j;
+        for(i = 0;i<s.length();i++){
+            for(j = k;j<i;j++){
+                if(s[j]==s[i]){
+                    k = j + 1;
+                    break;
+                }
+            }
+            num = max(num,i-k+1);
+        }
+        return num;
+    }
+};
