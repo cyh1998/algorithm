@@ -1,3 +1,4 @@
+//暴力法
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
@@ -12,5 +13,28 @@ public:
             num = max(num,i-k+1);
         }
         return num;
+    }
+};
+
+//滑动窗口：[left,right)
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int res = 0,left = 0,right = 0;
+        vector<int> arr(256,-1);
+        for(int i = 0;i<s.size();i++){
+            if(arr[s[i]] == -1){
+                right++;
+                arr[s[i]] = i;
+            }else{
+                res = max(res,right - left);
+                left = max(left,arr[s[i]] + 1);
+                right++;
+                arr[s[i]] = i;
+            }
+            
+        }
+        res = max(res,right - left);
+        return res;
     }
 };
