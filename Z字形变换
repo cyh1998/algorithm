@@ -1,0 +1,30 @@
+一、自己的方法
+    创建numRows大小的字符串数组,表示每行的字符,将字符按序填入数组中,最后将每行的字符连接
+class Solution {
+public:
+    string convert(string s, int numRows) {
+        if(numRows==1) return s;
+        vector<string> arr;
+        int x = 0;
+        int key = 0;
+        string res = "";
+        for(int i = 0;i<numRows;i++){  
+            arr.insert(arr.end(),"");
+        }
+        for(int i = 0;i<s.length();i++){
+            arr[x] = arr[x] + s[i];         
+            if(key==0) x++;
+            else x--;     
+            if(x==numRows-1){
+                key = 1;
+            }
+            if(x==0){
+                key = 0;
+            }
+        }
+        for(int i = 0;i<numRows;i++){
+            res = res + arr[i];
+        }
+        return res;
+    }
+};
