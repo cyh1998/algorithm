@@ -1,0 +1,66 @@
+一、哈希表 拆分num各个位上的数 求对应的罗马数字
+class Solution {
+public:
+    string intToRoman(int num) {
+        map<int,string> key;
+        key[0] = "";
+        key[1] = "I";
+        key[2] = "II";
+        key[3] = "III";
+        key[4] = "IV";
+        key[5] = "V";
+        key[6] = "VI";
+        key[7] = "VII";
+        key[8] = "VIII";
+        key[9] = "IX";
+        key[10] = "X";
+        key[20] = "XX";
+        key[30] = "XXX";
+        key[40] = "XL";
+        key[50] = "L";
+        key[60] = "LX";
+        key[70] = "LXX";
+        key[80] = "LXXX";
+        key[90] = "XC";
+        key[100] = "C";
+        key[200] = "CC";
+        key[300] = "CCC";
+        key[400] = "CD";
+        key[500] = "D";
+        key[600] = "DC";
+        key[700] = "DCC";
+        key[800] = "DCCC";
+        key[900] = "CM";
+        key[1000] = "M";
+        key[2000] = "MM";
+        key[3000] = "MMM";
+        int x = num % 10;
+        string res = key[x];
+        int a = 10;
+        while(num>=10){            
+            num = num / 10;
+            x = num % 10;
+            res.insert(0,key[(x*a)]);
+            a = a * 10;
+        }
+        return res;
+    }
+};
+
+
+二、哈希表 从大数到小数循环 拆分num 求罗马数字
+class Solution {
+public:
+    string intToRoman(int num) {
+        vector<int> values={1000,900,500,400,100,90,50,40,10,9,5,4,1}; 
+        vector<string> strs={"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+        string res;
+        for(int i = 0; i < values.size(); i++){
+            while(num >= values[i]){
+                res += strs[i];
+                num -= values[i];
+            }
+        }
+        return res;     
+    }   
+};
