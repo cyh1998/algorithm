@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {
+        vector<string> res;
+        if(digits.size() == 0) return res;
+        res.push_back("");
+        map<char,string> key;
+        key['2'] = "abc";
+        key['3'] = "def";
+        key['4'] = "ghi";
+        key['5'] = "jkl";
+        key['6'] = "mno";
+        key['7'] = "pqrs";
+        key['8'] = "tuv";
+        key['9'] = "wxyz";
+        for(int i = 0;i<digits.size();i++){
+            vector<string> test;
+            string s = key[digits[i]];
+            for(int j = 0;j<s.size();j++){
+                for(int k = 0;k<res.size();k++){
+                    test.push_back(res[k]+s[j]);
+                }
+            }
+            res = test;
+        }        
+        return res;
+    }
+};
