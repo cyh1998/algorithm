@@ -1,0 +1,40 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+法一：两次遍历,第一次遍历获取链表长度,第二次遍历删除第N个节点
+注意：删除节点时,需要分情况考虑,删除的节点为头节点或者为尾节点
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        if(head == NULL || n < 1) return head;
+        int l = 1;
+        ListNode* p = head;
+        while((p->next!=NULL)&&(p!=NULL)){
+            l++;
+            p = p->next;
+        }
+        l = l - n;
+        p = head;
+        if(l < 0) return head;
+        else if(l == 0){
+            p = head->next;
+            return p;
+        }
+        else if(n == 1){
+            for(int i = 0;i < l-1;i++) p = p->next;
+            p->next = NULL;
+        }
+        else{
+            for(int i = 0;i < l-1;i++) p = p->next;
+            p->next = p->next->next;
+        }
+        return head;
+    }
+};
+
+法二：
