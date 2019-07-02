@@ -1,0 +1,18 @@
+回溯算法
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<string> res;
+        fun(res,0,0,n,"");
+        return res;
+    }
+    
+    void fun(vector<string> &res,int left,int right,int n,string s){
+        if(s.size() == 2*n){
+            res.push_back(s);
+            return;
+        }  
+        if(left<n) fun(res,left+1,right,n,s+"(");
+        if(right<left) fun(res,left,right+1,n,s+")");
+    }
+};
