@@ -1,0 +1,49 @@
+法一:使用减法
+    注意超时,可翻倍除数,减少时间
+    考虑特殊情况被除数是-2147483648,单独考虑
+    因为题目要32位,应该不可以使用long long型,可参考位运算
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        if(dividend == -2147483648 && divisor == 1) return -2147483648;
+        if(dividend == -2147483648 && divisor == -1) return 2147483647;
+        long long int res = 0;
+        long long int a = fabs(dividend);   //fabs与abs的区别:abs(int)
+        long long int b = fabs(divisor);    //fabs()主要是求精度要求更高的double,float型的绝对值,即求实数的绝对值
+        long long int x = b;
+        int i = 0;
+        while(a>=b){
+            if(a<=x){
+                x = b;
+                i = 0;
+            }
+            a -= x;
+            x += b;
+            i++;
+            res += i;
+        }
+        if((dividend < 0 && divisor > 0)||(dividend > 0 && divisor < 0))
+            return (int)(0-res);
+        else return (int)res;
+    }
+};
+
+法二:使用位运算
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        long ans = 0, up = std::fabs(dividend), down = std::fabs(divisor);
+        while(up >= down){
+            long count = 1, base = down;
+            while(up > (base << 1)){
+                count <<= 1;
+                base <<= 1;
+            }
+            ans += count;
+            up -= base;
+        }
+        ans = ((dividend < 0)^(divisor < 0)) ? -ans : ans;
+        return (ans > INT_MAX || ans < INT_MIN) ? INT_MAX : ans;
+    }
+};
+
