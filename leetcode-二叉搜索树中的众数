@@ -7,6 +7,7 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+法一：使用额外空间
 class Solution {
 public:
     vector<int> findMode(TreeNode* root) {
@@ -33,5 +34,32 @@ public:
         else key[x] = 1;
         if(root->left) myfun(root->left,key);
         if(root->right) myfun(root->right,key);
+    }
+};
+法二：不使用额外空间，一遍遍历(中序遍历)
+class Solution {
+public:
+    vector<int> findMode(TreeNode* root) {
+        vector<int> res;
+        if(root == NULL) return res;
+        int timenum = 1,maxtimes = 0;
+        TreeNode* p = NULL;
+        myfun(root,p,res,timenum,maxtimes);
+        return res;
+    }
+    
+    void myfun(TreeNode* root,TreeNode*& p,vector<int>& res,int& timenum,int& maxtimes){
+        if(root->left) myfun(root->left,p,res,timenum,maxtimes);
+        if(p){
+            if(p->val == root->val) timenum++;
+            else timenum = 1;
+        }
+        if(timenum > maxtimes){
+            res.clear();
+            res.push_back(root->val);
+            maxtimes = timenum;
+        }else if(timenum == maxtimes) res.push_back(root->val);
+        p = root;
+        if(root->right) myfun(root->right,p,res,timenum,maxtimes);
     }
 };
