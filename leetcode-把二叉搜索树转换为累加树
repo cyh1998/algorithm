@@ -29,3 +29,21 @@ public:
         }
     }
 };
+
+优化代码：
+class Solution {
+public:
+    TreeNode* convertBST(TreeNode* root) {
+        if(root == NULL) return root;
+        int num = 0;
+        myfun(root,num);
+        return root;
+    }
+    
+    void myfun(TreeNode* root,int &num){
+        if(root->right) myfun(root->right,num);
+        root->val += num;
+        num = root->val;
+        if(root->left) myfun(root->left,num);
+    }
+};
