@@ -1,0 +1,24 @@
+class Solution {
+public:
+    //元音字母: a、e、i、o、u
+    string reverseVowels(string s) {
+        vector<int> arr;
+        for(int i =0;i < s.size();i++){
+            if(s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o' || s[i] == 'u' || s[i] == 'A' || s[i] == 'E' || s[i] == 'I' || s[i] == 'O' || s[i] == 'U'){
+                arr.push_back(i);
+            }
+        }
+
+        int left = 0;
+        int right = arr.size() - 1;
+        while(left < right){
+            char c = s[arr[left]];
+            s[arr[left]] = s[arr[right]];
+            s[arr[right]] = c;
+            left++;
+            right--;
+        }
+
+        return s;
+    }
+};
