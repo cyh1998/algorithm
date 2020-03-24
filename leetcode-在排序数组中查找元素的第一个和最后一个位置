@@ -1,0 +1,42 @@
+//二分找左右边界
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        vector<int> res(2,-1);
+        if(nums.empty()) return res;
+
+        int left,right,mid;
+        int res_left = -1;
+        int res_right = -1;
+
+        //找左边界
+        left = 0;
+        right = nums.size() - 1;
+        while(left < right){
+            mid = (left + right) / 2;
+            if(nums[mid] >= target){
+                right = mid;
+            }else{
+                left = mid + 1;
+            }
+        }
+        if(nums[left] != target) return res;
+
+        //找右边界
+        res_left = left;
+        right = nums.size();
+        while(left < right){
+            mid = (left + right) / 2;
+            if(nums[mid] <= target){
+                left = mid + 1;
+            }else{
+                right = mid;
+            }
+        }
+        res_right = left - 1;
+
+        res[0] = res_left;
+        res[1] = res_right;
+        return res;
+    }
+};
