@@ -1,0 +1,37 @@
+//法一：二分法
+class Solution {
+public:
+    bool isPerfectSquare(int num) {
+        if(num == 0 || num == 1) return true;
+        if(num < 0) return false;
+        long left = 0;
+        long mid;
+        long right = num / 2 + 1;
+        while(left <= right){
+            mid = (left + right)/2;
+            if(mid * mid == num){
+                return true;
+            }else if(mid * mid > num){
+                right = mid - 1;
+            }else{
+                left = mid + 1;
+            }
+        }
+        return false;
+    }
+};
+
+//法二：完全平方数的特点 1、1+3、1+3+5、1+3+5+7...
+class Solution {
+public:
+    bool isPerfectSquare(int num) {
+        long n = 1;
+        long s = 0;
+        while(num >= s){
+            s += n;
+            if(num - s == 0) return true;
+            n = n + 2;
+        }
+        return false;
+    }
+};
