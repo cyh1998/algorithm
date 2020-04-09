@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        int row[9][10] = {0};
+        int column[9][10] = {0};
+        int chunk[9][10] = {0};
+        
+        for(int i = 0;i < 9;i++){
+            for(int j = 0;j < 9;j++){
+                if(board[i][j] == '.') continue;
+                int number = board[i][j] - '0';
+                if(row[i][number]) return false; 
+                if(column[j][number]) return false;
+                if(chunk[j/3 + (i/3)*3][number]) return false;
+
+                row[i][number] = 1;
+                column[j][number] = 1;
+                chunk[j/3 + (i/3)*3][number] = 1;
+            }
+        }
+        return true;
+    }
+};
