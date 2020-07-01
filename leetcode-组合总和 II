@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<vector<int>> allRes;
+    vector<int> oneRes;
+
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        sort(candidates.begin(),candidates.end());
+        myfun(candidates,target,0);
+        return allRes;
+    }
+
+    void myfun(vector<int>& candidates, int target, int startindex) {
+        if(target == 0){
+            allRes.push_back(oneRes);
+            return;
+        }
+        if(target < 0) return;
+        for(int i = startindex;i < candidates.size();++i){
+            if(i > startindex && candidates[i] == candidates[i-1]) continue;
+            oneRes.push_back(candidates[i]);
+            myfun(candidates,target - candidates[i],i + 1);
+            oneRes.pop_back();
+        }
+    }
+};
