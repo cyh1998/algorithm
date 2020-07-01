@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<vector<int>> allRes;
+    vector<int> oneRes;
+
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<bool> usenum (nums.size(),true);
+        sort(nums.begin(), nums.end());
+        myfun(nums,usenum);
+        return allRes;
+    }
+
+    void myfun(vector<int>& nums,vector<bool>& usenum){
+        if(oneRes.size() == nums.size()){
+            allRes.push_back(oneRes);
+            return;
+        }
+        for(int i = 0;i < nums.size();++i){
+            if(usenum[i]){
+                if(i > 0 && nums[i] == nums[i-1] && usenum[i - 1]) continue;
+                oneRes.push_back(nums[i]);
+                usenum[i] = false;
+                myfun(nums,usenum);
+                oneRes.pop_back();
+                usenum[i] = true;
+            }
+        }
+    }
+};
