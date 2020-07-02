@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        vector<vector<string>> res;  
+        int sub = 0;
+        string tmp;
+        map<string,int> work;
+        for(auto str:strs){
+            tmp=str;
+            sort(tmp.begin(),tmp.end());
+            if(work.find(tmp) != work.end()){
+               res[work[tmp]].push_back(str);
+            }else{
+                res.push_back({str});
+                work[tmp]=sub++;
+            }
+        }
+        return res;
+    }
+};
