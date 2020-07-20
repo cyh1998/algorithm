@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        int size_num = nums.size();
+        if(size_num <= 2) return size_num;
+        vector<int>::iterator it_one = nums.begin();
+        vector<int>::iterator it_two = it_one + 1;
+        vector<int>::iterator it_three = it_one + 2;
+        while(it_three != nums.end()){
+            if(*it_one == *it_two && *it_three == *it_one){
+                nums.erase(it_three);
+                size_num--;
+            }else{
+                it_one++;
+                it_two++;
+                it_three++;
+            }
+        }
+        return size_num;
+    }
+};
