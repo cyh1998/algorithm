@@ -1,0 +1,80 @@
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        unordered_set<string> wordSet(wordList.begin(), wordList.end());
+        if (wordSet.find(endWord) == wordSet.end()) return 0;
+
+        queue<string> wordQueue;
+        wordQueue.push(beginWord);
+        int temp = 1;
+
+        while (!wordQueue.empty()) {
+            int q_size = wordQueue.size();
+            for (int i = 0; i < q_size; ++i) {
+                string nowWord = wordQueue.front();
+                wordQueue.pop();
+                for (int j = 0; j < nowWord.size(); j++) {
+                    char cc = nowWord[j];
+                    for (char c = 'a'; c <= 'z'; c++) {
+                        nowWord[j] = c;
+                        if (wordSet.find(nowWord) != wordSet.end()) {
+                            if (nowWord == endWord) return temp + 1;
+                            else {
+                                wordQueue.push(nowWord);
+                                wordSet.erase(nowWord);
+                            }
+                        }
+                    }
+                    nowWord[j] = cc;
+                }
+            }
+            temp++;
+        }
+        return 0;
+    }
+
+    bool tool(string beginWord, string endWord) {
+        int count = 0;
+        for (int i = 0; i < beginWord.size(); ++i) {
+            if (beginWord[i] != endWord[i]) count++;
+        }
+        return count == 1;
+    }
+};
+
+// 超时
+// class Solution {
+// public:
+//     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+//         queue<string> wordQueue;
+//         wordQueue.push(beginWord);
+//         vector<bool> tab(wordList.size() + 1);
+//         int temp = 1;
+
+//         while (!wordQueue.empty()) {
+//             int q_size = wordQueue.size();
+//             for (int i = 0; i < q_size; ++i) {
+//                 string nowWord = wordQueue.front();
+//                 wordQueue.pop();
+//                 for (int j = 0; j < wordList.size(); ++j) {
+//                     if (tab[j]) continue;
+//                     if (tool(wordList[j], nowWord)) {
+//                         if (wordList[j] == endWord) return temp + 1;
+//                         wordQueue.push(wordList[j]);
+//                         tab[j] = true;
+//                     }
+//                 }
+//             }
+//             temp++;
+//         }
+//         return 0;
+//     }
+
+//     bool tool(string beginWord, string endWord) {
+//         int count = 0;
+//         for (int i = 0; i < beginWord.size(); ++i) {
+//             if (beginWord[i] != endWord[i]) count++;
+//         }
+//         return count == 1;
+//     }
+// };
