@@ -1,0 +1,48 @@
+class Solution {
+public:
+    static bool ifWordBreak(string s, vector<string>& wordDict) {
+        unordered_set<string> WordDict(wordDict.begin(), wordDict.end());
+        auto dp = vector<bool> (s.size() + 1);
+        dp[0] = true;
+
+        for (int i = 1; i <= s.size(); ++i) {
+            for (int j = 0; j < i; ++j) {
+                if (dp[j] && WordDict.find(s.substr(j, i - j)) != WordDict.end()) {
+                    dp[i] = true;
+                    continue;
+                }
+            }
+        }
+        return dp[s.size()];
+    }
+
+    vector<string> wordBreak(string s, vector<string>& wordDict) {
+        unordered_set<string> WordDict(wordDict.begin(), wordDict.end());
+        vector<vector<string>> res(s.size() + 1);
+        auto dp = vector<bool> (s.size() + 1);
+        dp[0] = true;
+        if (ifWordBreak(s, wordDict)) {
+            for (int i = 1; i <= s.size(); ++i) {
+                vector<string> temp;
+                string str;
+                for (int j = 0; j < i; ++j) {
+                    str = s.substr(j, i - j);
+                    if (dp[j] && WordDict.find(str) != WordDict.end()) {
+                        dp[i] = true;
+                        if (res[j].size() == 0) {
+                            temp.push_back(str);
+                        } else {
+                            for (int k = 0; k < res[j].size(); ++k) {
+                                temp.push_back(res[j][k] + " " + str);
+                            }
+                        }
+                    }
+                }
+                res[i] = temp;
+            }
+        }
+        return res[s.size()];
+    }
+
+    
+};
