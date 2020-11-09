@@ -1,0 +1,58 @@
+class Solution {
+public:
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int K) {
+        // 法一：排序(超时)
+        // sort(points.begin(), points.end(), [](vector<int> a, vector<int> b) {
+        //     return pow(a[0], 2) + pow(a[1], 2) < pow(b[0], 2) + pow(b[1], 2);
+        // });
+
+        // return {points.begin(), points.begin() + K};
+
+        // 法二：利用multimap
+        // multimap<int, vector<int>> data;
+        // vector<vector<int>> res;
+        // int k = 0;
+
+        // for (int i = 0; i < points.size(); ++i) {
+        //     data.insert(pair<int, vector<int>>(pow(points[i][0], 2) + pow(points[i][1], 2), points[i]));
+        // }
+
+        // multimap<int, vector<int>>::iterator it = data.begin();
+        // while(k < K) {
+        //     res.push_back(it->second);
+        //     it++;
+        //     k++;
+        // }
+
+        // return res;
+
+        //法三：优先队列 priority_queue
+        // priority_queue<pair<int, vector<int>>> q;
+        // int i;
+
+        // for (i = 0; i < K; ++i) {
+        //     q.push(pair<int, vector<int>>(pow(points[i][0], 2) + pow(points[i][1], 2), points[i]));
+        // }
+
+        // for (; i < points.size(); ++i) {
+        //     int dis = pow(points[i][0], 2) + pow(points[i][1], 2);
+        //     if (dis < q.top().first) {
+        //         q.pop();
+        //         q.push(pair<int, vector<int>>(dis, points[i]));
+        //     }
+        // }
+
+        // vector<vector<int>> res;
+        // while (!q.empty()) {
+        //     res.push_back(q.top().second);
+        //     q.pop();
+        // }
+        // return res;
+
+        //法四：nth_element
+        nth_element(points.begin(),points.begin()+K,points.end(),[](vector<int>& ptA, vector<int>& ptB){
+            return ptA[0]*ptA[0] + ptA[1]*ptA[1] < ptB[0]*ptB[0] + ptB[1]*ptB[1];
+        });
+        return {points.begin(),points.begin()+K};
+    }
+};
