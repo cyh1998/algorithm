@@ -1,0 +1,23 @@
+class Solution {
+public:
+    string removeKdigits(string num, int k) {
+        for (int i = 0; i < num.size() - 1; ++i) {
+            if (k == 0) break;
+
+            if(num[i] <= num[i + 1]) {
+                continue;
+            } else {
+                num.erase(i, 1);
+                k--;
+                if (i == 0) i--;
+                else i -= 2;
+            }
+        }
+
+        if (k > 0) num.erase(num.size() - k, k);
+
+        while(num[0] == '0') num.erase(0, 1);
+
+        return num.size() == 0 ? "0" : num;
+    }
+};
