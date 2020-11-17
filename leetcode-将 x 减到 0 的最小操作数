@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int minOperations(vector<int>& nums, int x) {
+        unordered_map<int, int> pre_sum;
+        int res = INT_MAX;
+        int size = nums.size();
+
+        int sum = 0;
+        for (int i = 0; i < size; ++i) {
+            sum += nums[i];
+            pre_sum.insert({sum, i});
+        }
+        pre_sum.insert({0, -1});
+
+        sum = 0;
+        if (pre_sum.find(x) != pre_sum.end()) {
+            res = min(res, pre_sum[x] + 1);
+        }
+        for (int i = size - 1; i >= 0; --i) {
+            sum += nums[i];
+            if (pre_sum.find(x - sum) != pre_sum.end()) {
+                int count = size - i + pre_sum[x - sum] + 1;
+                if (count > size) continue;
+                res = min(res, count); 
+            }
+        }
+
+        return res == INT_MAX ? -1 : res;
+    }
+};
