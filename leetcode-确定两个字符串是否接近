@@ -1,0 +1,63 @@
+class Solution {
+public:
+    bool closeStrings(string word1, string word2) {
+        //法一：利用两个map 存放字母和次数的信息
+        // if (word1.size() != word2.size()) return false;
+        
+        // map<char, int> word_one;
+        // map<char, int> word_two;
+        
+        // for (int i = 0; i < word1.size(); ++i) {
+        //     if (word_one.count(word1[i]) == 0) {
+        //         word_one[word1[i]] = 1;
+        //     } else {
+        //         word_one[word1[i]]++;
+        //     }
+        // }
+        
+        // for (int i = 0; i < word2.size(); ++i) {
+        //     if (word_two.count(word2[i]) == 0) {
+        //         word_two[word2[i]] = 1;
+        //     } else {
+        //         word_two[word2[i]]++;
+        //     }
+        // }
+        
+        // for (map<char, int>::iterator iter = word_two.begin(); iter != word_two.end(); iter++) {
+        //     if (word_one.count(iter->first) == 0) {
+        //         return false;
+        //     }
+        // }
+        
+        // for (map<char, int>::iterator iter = word_two.begin(); iter != word_two.end(); iter++) {
+        //     for(map<char, int>::iterator it = word_one.begin(); it != word_one.end(); it++) {
+        //         if(it->second == iter->second) {
+        //             word_one.erase(it);
+        //             break;
+        //         }
+        //     }
+        // }
+        
+        // if (word_one.size() > 0) return false;
+        // return true;
+
+        //法二：利用长度为26的数字 存放字母和次数的信息
+        if (word1.size() != word2.size()) return false;
+
+        vector<int> word_one(26);
+        vector<int> word_two(26);
+
+        for (int i = 0; i < word1.size(); ++i) word_one[word1[i] - 'a']++;
+        for (int i = 0; i < word2.size(); ++i) word_two[word2[i] - 'a']++;
+
+        for (int i = 0; i < 26; ++i) {
+            if (word_one[i] == 0 && word_two[i]) return false;
+            if (word_two[i] == 0 && word_one[i]) return false;
+        }
+
+        sort(word_one.begin(), word_one.end());
+        sort(word_two.begin(), word_two.end());
+
+        return word_one == word_two;
+    }
+};
