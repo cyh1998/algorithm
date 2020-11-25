@@ -1,0 +1,34 @@
+class Solution {
+public:
+    string sortString(string s) {
+        string res;
+        bool temp = true;
+
+        vector<int> arr(26);
+        for (int i = 0; i < s.size(); ++i) {
+            arr[s[i] - 'a']++;
+        }
+
+        while(temp) {
+            temp = false;
+
+            for (int i = 0; i < 26; ++i) {
+                if (arr[i] != 0) {
+                    res += i + 'a';
+                    arr[i]--;
+                    temp = true;
+                } 
+            }
+
+            for (int i = 25; i >= 0; --i) {
+                if (arr[i] != 0) {
+                    res += i + 'a';
+                    arr[i]--;
+                    temp = true;
+                } 
+            }
+        }
+        
+        return res;
+    }
+};
