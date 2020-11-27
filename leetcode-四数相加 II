@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
+        int res = 0;
+        unordered_map<int, int> table;
+
+        for (int i = 0; i < A.size(); ++i) {
+            for (int j = 0; j < B.size(); ++j) {
+                // if(table.find(A[i] + B[j]) != table.end()) table[A[i] + B[j]]++;
+                // else table.insert({A[i] + B[j], 1});
+                table[A[i] + B[j]]++;
+            }
+        }
+
+        for (int i = 0; i < C.size(); ++i) {
+            for (int j = 0; j < D.size(); ++j) {
+                if(table.count(-C[i] - D[j])) res += table[-C[i] - D[j]];
+            }
+        }
+
+        return res;
+    }
+};
