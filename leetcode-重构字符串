@@ -1,0 +1,27 @@
+class Solution {
+public:
+    static bool cmp(pair<int, float>a, pair<int, float>b){
+        return a.second > b.second;
+    }
+
+    string reorganizeString(string S) {
+        map<int, int> m;
+        for (auto s : S) m[s - 'a']++;
+        
+        vector<pair<int, int>> vec(m.begin(), m.end());
+        sort(vec.begin(), vec.end(), cmp);
+
+        if (2 * vec[0].second - 1 > S.size()) return "";
+
+        string res(S);
+        int index = 0;
+        for (int i = 0; i < vec.size(); i++) {
+            while (vec[i].second--) {
+                res[index] = vec[i].first + 'a';
+                index += 2;
+                if (index >= S.size()) index = 1;
+            }
+        }
+        return res;
+    }
+};
