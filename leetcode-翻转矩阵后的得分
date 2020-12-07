@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int matrixScore(vector<vector<int>>& A) {
+        int one;
+        int m = A.size();
+        int n = A[0].size();
+        int res = pow(2, n - 1) * m;
+
+        for (int i = 1; i < n; ++i) {
+            one = 0;
+            for (int j = 0; j < m; ++j) {
+                if (A[j][0] == 1) {
+                    if (A[j][i] == 1) ++one;
+                } else {
+                    if (A[j][i] == 0) ++one;
+                }
+            }
+            if (one > m - one) res += pow(2, n - 1 - i) * one;
+            else res += pow(2, n - 1 - i) * (m - one);
+        }
+
+        return res;
+    }
+};
