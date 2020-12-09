@@ -1,0 +1,44 @@
+class Solution {
+public:
+    vector<int> splitIntoFibonacci(string S) {
+        vector<int> res;
+        int s = S.size();
+        for (int i = 1; i < (s + 1) / 2; ++i) {
+            long long one = 0;
+            for (int c = 0; c < i; ++c) {
+                one = one * 10 + S[c] - '0';
+                if (one > INT_MAX) break;
+            }
+            
+            for(int j = 1; j <= s - 2 * i; ++j) {
+                res.clear();
+                if (dfs(S, one, i, j, res)) {
+                    if (res.size() > 2) return res;
+                }
+            }
+        }
+        return {};
+    }
+
+    bool dfs(string& S, long long one, int index, int j, vector<int>& res)
+    {
+        long long two = 0;
+        for (int c = 0; c < j; ++c) {
+            two = two * 10 + S[index + c] - '0';
+            if (two > INT_MAX) return false;
+        }
+        
+        if (index + j == S.size()) {
+            res.push_back(one);
+            res.push_back(two);
+            return true;
+        }
+        
+        string str = to_string(one + two);
+        for(int x = 0; x < str.size(); ++x) {
+            if(str[x] != S[index + j + x]) return false;
+        }
+        res.push_back(one);
+        return dfs(S, two, index + j, str.size(), res);
+    }
+};
