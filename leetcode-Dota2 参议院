@@ -1,0 +1,38 @@
+class Solution {
+public:
+    string predictPartyVictory(string senate) {
+        int R = 0, D = 0;
+        bool temp = true;
+        map<int, char> m;
+
+        for (int i = 0; i < senate.size(); ++i) m[i] = senate[i];
+
+        while (temp) {
+            temp = false;
+            auto iter = m.begin();
+            while (iter != m.end()) {
+                if (iter->second == 'R') {
+                    if (D) {
+                        m.erase(iter++);
+                        temp = true;
+                        --D;
+                    } else {
+                        ++R;
+                        ++iter;
+                    }
+                } else {
+                    if (R) {
+                        m.erase(iter++);
+                        temp = true;
+                        --R;
+                    } else {
+                        ++D;
+                        ++iter;
+                    }
+                }
+            }
+        }
+
+        return R > 0 ? "Radiant" : "Dire";
+    }
+};
