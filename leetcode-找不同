@@ -1,0 +1,21 @@
+class Solution {
+public:
+    char findTheDifference(string s, string t) {
+        //法一：排序
+        // int i;
+        // sort(s.begin(), s.end());
+        // sort(t.begin(), t.end());
+        // for (i = 0; i < s.size(); ++i) {
+        //     if (s[i] != t[i]) return t[i];
+        // }
+        // return t[i];
+        
+        //法二：位运算
+        string str = s + t;
+        char res = 0;
+        for (const auto &c : str) {
+            res ^= c;
+        }
+        return res;
+    }
+};
