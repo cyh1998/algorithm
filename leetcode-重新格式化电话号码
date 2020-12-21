@@ -1,0 +1,18 @@
+class Solution {
+public:
+    string reformatNumber(string number) {
+        string str, res;
+        for (auto &s : number) {
+            if (s != ' ' && s != '-') str += s;
+        }
+        
+        res += str[0];
+        for (int i = 1; i < str.size(); ++i) {
+            if (i % 3 == 0) res += '-';
+            res += str[i];
+        }
+        
+        if (res[res.size() - 2] == '-') swap(res[res.size() - 2], res[res.size() - 3]); 
+        return res;
+    }
+};
