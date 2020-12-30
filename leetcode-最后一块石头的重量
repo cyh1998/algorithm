@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int lastStoneWeight(vector<int>& stones) {
+        priority_queue<int> arr;
+        for (const auto &i : stones) arr.emplace(i);
+
+        while (arr.size() > 1) {
+            int y = arr.top();
+            arr.pop();
+            int x = arr.top();
+            arr.pop();
+
+            if (x < y) arr.emplace(y - x);
+        }
+
+        return arr.empty() ? 0 : arr.top();
+    }
+};
