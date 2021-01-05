@@ -1,0 +1,59 @@
+class Solution {
+public:
+    int countPairs(vector<int>& deliciousness) {
+        // long long count = 0;
+        // int mod = 1000000007;
+        // map<long long, long long> m;
+        // for (auto &i : deliciousness) m[i]++;
+        
+        // for (auto &i : m) {
+        //     if (i.second == 0) continue;
+        //     for (int j = 0; j < 22; ++j) {
+        //         long long x = 1 << j;
+        //         long long temp = x - i.first;
+        //         if (temp == i.first) {
+        //             count += (i.second * (i.second - 1)) / 2;
+        //         }
+        //         if (temp != i.first && i.first > temp) {
+        //             count += i.second * m[temp];
+        //         }
+        //     }
+        // }
+        // return count % mod;
+
+        map<int,long long> m;
+        for(auto d : deliciousness)
+            m[d]++;//计数
+        long long ans = 0, mod = 1e9+7;
+        for(int i = 0; i <= 22; i++)
+        {	// 枚举 2的幂
+            int target = 1 << i;
+            for(auto it = m.begin(); it != m.end() && it->first <= target/2; ++it)
+            {
+                int d1 = target-it->first;//另一份餐的美味程度
+                if(m.find(d1) == m.end())//不存在
+                    continue;
+                if(it->first != d1)//不相等
+                    ans = (ans+it->second*m[d1])%mod;
+                else//相等 Cn2
+                    ans = (ans+m[d1]*(m[d1]-1)/2)%mod;
+            }
+        }
+        return ans;
+    }
+};
+
+// class Solution {
+// public:
+//     int countPairs(vector<int>& deliciousness) {
+//         long long res = 0, mod = 1e9 + 7;
+//         unordered_map<int, int> hash;
+//         for (auto &c : deliciousness) {
+//             for (int i = 0; i <= 21; i++) {
+//                 if(hash.count((1 << i) - c)) res += hash[(1 << i) - c]; 
+//             }
+//             hash[c]++;
+//         }
+//         return res % mod;
+//     }
+// };
