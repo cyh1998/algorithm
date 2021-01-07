@@ -1,0 +1,33 @@
+class Solution {
+public:
+    unordered_map<int, int> m;
+
+    int find(int x) {
+        if (m[x] != x) {
+            m[x] = find(m[x]);
+        }
+        return m[x];
+    }
+
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int n = isConnected.size();
+        int ret = 0;
+        for (int i = 0; i < n; ++i) {
+            m[i] = i;
+        }
+
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                if (isConnected[i][j]) {
+                    if (find(i) != find(j)) m[find(i)] = m[j];
+                }
+            }
+        }
+
+        for (int i = 0; i < n; ++i) {
+            if (m[i] == i) ret++;
+        }
+
+        return ret;
+    }
+};
