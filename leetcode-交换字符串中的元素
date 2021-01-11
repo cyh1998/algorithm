@@ -1,0 +1,39 @@
+class Solution {
+public:
+    vector<int> m;
+
+    int Find(int x) 
+    {
+        if (m[x] != x) {
+            m[x] = Find(m[x]);
+        }
+        return m[x];
+    }
+
+    string smallestStringWithSwaps(string s, vector<vector<int>>& pairs) {
+        unordered_map<int, vector<int>> mv;
+
+        for (int i = 0; i < s.size(); ++i) {
+            m.push_back(i);
+        }
+
+        for (int i = 0; i < pairs.size(); ++i) {
+            if (Find(pairs[i][0]) != Find(pairs[i][1])) m[Find(pairs[i][0])] = m[pairs[i][1]];
+        }
+
+        for (int i = 0; i < s.length(); i++) {
+            mv[Find(i)].emplace_back(s[i]);
+        }
+
+        for (auto &i : mv) {
+            sort(i.second.begin(), i.second.end(), greater<int>());
+        }
+
+        for (int i = 0; i < s.length(); i++) {
+            int x = Find(i);
+            s[i] = mv[x].back();
+            mv[x].pop_back();
+        }
+        return s;
+    }
+};
