@@ -1,0 +1,42 @@
+class Solution {
+public:
+    unordered_map<int, int> m;
+
+    int find(int x) {
+        if (m[x] != x) m[x] = find(m[x]);
+        return m[x];
+    }
+
+    int minimumHammingDistance(vector<int>& source, vector<int>& target, vector<vector<int>>& allowedSwaps) {
+        int ret = 0;
+        unordered_map<int, vector<int>> tm;
+        for (int i = 0; i < source.size(); ++i) m[i] = i; //初始化并查集
+
+        for (int i = 0; i < allowedSwaps.size(); ++i) { //并
+            if (find(allowedSwaps[i][0]) != find(allowedSwaps[i][1])) m[find(allowedSwaps[i][0])] = m[allowedSwaps[i][1]];
+        }
+
+        for (int i = 0; i < target.size(); ++i) tm[target[i]].emplace_back(i); //维护target中每个元素出现的下标位置
+
+        for (int i = 0; i < source.size(); ++i) { //查
+            bool temp = false;
+
+            if (!tm.count(source[i])) { //如果目标元素不存在，跳过
+                ret++;
+                continue;
+            }
+
+            for (int j = 0; j < tm[source[i]].size(); ++j) {
+                if (find(i) == find(tm[source[i]][j])) {
+                    tm[source[i]].erase(tm[source[i]].begin() + j); //erase找到的元素下标
+                    temp = true;
+                    break;
+                }
+            }
+
+            if (!temp) ++ret; //判断是否有找到满足的下标位置
+        }
+
+        return ret;
+    }
+};
