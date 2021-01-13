@@ -1,0 +1,23 @@
+class Solution {
+public:
+    unordered_map<int, int> m;
+
+    int find(int x) 
+    {
+        return m[x] == x ? x : find(m[x]);
+    }
+
+    vector<int> findRedundantConnection(vector<vector<int>>& edges) {
+        for (auto &i : edges) {
+            m[i[0]] = i[0];
+            m[i[1]] = i[1];
+        }
+
+        for (auto &i : edges) {
+            if (find(i[0]) != find(i[1])) m[find(i[1])] = i[0];
+            else return {i[0], i[1]};
+        }
+
+        return {};
+    }
+};
