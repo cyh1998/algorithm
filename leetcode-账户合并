@@ -1,0 +1,43 @@
+class Solution {
+public:
+    unordered_map<int, int> m;
+
+    int Find(int x) 
+    {
+        if (m[x] != x) {
+            m[x] = Find(m[x]);
+        }
+        return m[x];
+    }
+
+    vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
+        vector<vector<string>> ret;
+        int n = accounts.size();
+        for (int i = 0; i < n; ++i) m[i] = i;
+
+        unordered_map<string, int> um;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 1; j < accounts[i].size(); ++j) {
+                if (!um.count(accounts[i][j])) um[accounts[i][j]] = Find(i);
+                else {
+                    m[Find(i)] = Find(um[accounts[i][j]]);
+                }
+            }
+        }
+
+        unordered_map<int, set<string>> accMail;
+        for (int i = 0; i < accounts.size(); i++) {
+            int t = Find(i);
+            for (int j = 1; j < accounts[i].size(); j++) accMail[t].insert(accounts[i][j]);
+        }
+
+        for (auto& acc : accMail) {
+            vector<string> ans;
+            ans.push_back(accounts[acc.first][0]);
+            for (auto& mail : acc.second) ans.push_back(mail);
+            ret.push_back(ans);
+        }
+
+        return ret;
+    }
+};
