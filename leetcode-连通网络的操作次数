@@ -1,0 +1,44 @@
+class Djset {
+public:
+    vector<int> parent;
+    vector<int> rank;
+    int count;
+    int num;
+    Djset(int n): parent(vector<int>(n)), rank(vector<int>(n)), count(n), num(0) {
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+    }
+    
+    int find(int x) {
+        if (x != parent[x]) {
+            parent[x] = find(parent[x]);
+        }
+        return parent[x];
+    }
+    
+    void merge(int x, int y) {
+        int rootx = find(x);
+        int rooty = find(y);
+        if (rootx != rooty) {
+            if (rank[rootx] < rank[rooty]) {
+                swap(rootx, rooty);
+            }
+            parent[rooty] = rootx;
+            count--;
+            if (rank[rootx] == rank[rooty]) rank[rootx] += 1;
+        } else num++;
+    }
+};
+
+class Solution {
+public:
+    int makeConnected(int n, vector<vector<int>>& connections) {
+        Djset ds(n);
+        for (auto &i : connections) {
+            ds.merge(i[0], i[1]);
+        }
+
+        return ds.num < ds.count - 1 ? -1 : min(ds.num, ds.count - 1);
+    }
+};
