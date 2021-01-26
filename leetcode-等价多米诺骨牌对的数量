@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int numEquivDominoPairs(vector<vector<int>>& dominoes) {
+        map<vector<int>, int> m;
+        int ret = 0;
+        for (auto &i : dominoes) {
+            sort(i.begin(), i.end());
+            m[i]++;
+        }
+
+        for (auto &i : m) {
+            ret += (i.second * (i.second - 1)) / 2;
+        }
+
+        return ret;
+    }
+};
