@@ -1,0 +1,65 @@
+class Djset {
+public:
+    vector<int> parent;
+    vector<int> rank;
+    int count;
+    int num;
+
+    Djset(int n) : parent(vector<int>(n)), rank(vector<int>(n)), count(n), num(0) {
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+    }
+
+    int find(int x) {
+        if (x != parent[x]) {
+            parent[x] = find(parent[x]);
+        }
+        return parent[x];
+    }
+
+    void merge(int x, int y) {
+        int rootx = find(x);
+        int rooty = find(y);
+        if (rootx != rooty) {
+            if (rank[rootx] < rank[rooty]) {
+                swap(rootx, rooty);
+            }
+            parent[rooty] = rootx;
+            count--;
+            if (rank[rootx] == rank[rooty]) rank[rootx] += 1;
+        } else num++;
+    }
+};
+
+class Solution {
+public:
+    int maxNumEdgesToRemove(int n, vector<vector<int>>& edges) {
+        vector<vector<int>> edges_all, edges_a, edges_b;
+        Djset ds_a(n), ds_b(n);
+        int ret = 0;
+
+        for (auto &i : edges) {
+            if (i[0] == 1) edges_a.push_back(i);
+            else if (i[0] == 2) edges_b.push_back(i);
+            else edges_all.push_back(i);
+        }
+
+        for (auto &i : edges_all) {
+            ds_a.merge(i[1] - 1, i[2] - 1);
+            ds_b.merge(i[1] - 1, i[2] - 1);
+        }
+
+        ret = ds_a.num;
+
+        for (auto &i : edges_a) {
+            ds_a.merge(i[1] - 1, i[2] - 1);
+        }
+        for (auto &i : edges_b) {
+            ds_b.merge(i[1] - 1, i[2] - 1);
+        }
+
+        if (ds_a.count > 1 || ds_b.count > 1) return -1;
+        else return ds_a.num + ds_b.num - ret;
+    }
+};
