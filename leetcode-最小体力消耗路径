@@ -1,0 +1,58 @@
+class Djset {
+public:
+    vector<int> parent;
+    vector<int> rank;
+    int count;
+
+    Djset(int n) : parent(vector<int>(n)), rank(vector<int>(n)), count(n) {
+        for (int i = 0; i < n; i++) parent[i] = i;
+    }
+
+    int find(int x) {
+        if (x != parent[x]) parent[x] = find(parent[x]);
+        return parent[x];
+    }
+
+    void merge(int x, int y) {
+        int rootx = find(x);
+        int rooty = find(y);
+        if (rootx != rooty) {
+            if (rank[rootx] < rank[rooty]) swap(rootx, rooty);
+            parent[rooty] = rootx;
+            count--;
+            if (rank[rootx] == rank[rooty]) rank[rootx] += 1;
+        }
+    }
+};
+
+struct Edge {
+    int len, x, y;
+    Edge(int len, int x, int y) : len(len), x(x), y(y) { }
+};
+
+class Solution {
+public:
+    int minimumEffortPath(vector<vector<int>>& heights) {
+        int row = heights.size();
+        int col = heights[0].size();
+
+        Djset ds(row * col);
+        vector<Edge> edges;
+
+        for (int i = 0; i < row; ++i) {
+            for (int j = 0; j < col; ++j) {
+                int id = i * col + j;
+                if (i > 0) edges.emplace_back(abs(heights[i][j] - heights[i - 1][j]), id - col, id);
+                if (j > 0) edges.emplace_back(abs(heights[i][j] - heights[i][j - 1]), id - 1, id);
+            }
+        }
+        sort(edges.begin(), edges.end(), [](Edge a, Edge b){ return a.len < b.len; });
+
+        for (auto &i : edges) {
+            ds.merge(i.x, i.y);
+            if (ds.find(0) == ds.find(row * col - 1)) return i.len;
+        }
+
+        return 0;
+    }
+};
