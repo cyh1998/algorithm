@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int countBalls(int lowLimit, int highLimit) {
+        unordered_map<int, int> m;
+        int ret = 0;
+        for (int i = lowLimit; i <= highLimit; ++i) {
+            int num = i;
+            int c = 0;
+            while(num > 0) {
+                c += num % 10;
+                num = num / 10;
+            }
+            m[c]++;
+            ret = max(ret, m[c]);
+        }
+        return ret;
+    }
+};
