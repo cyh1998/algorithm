@@ -1,0 +1,37 @@
+class Solution {
+public:
+    vector<int> restoreArray(vector<vector<int>>& adjacentPairs) {
+        vector<int> ret;
+        unordered_map<int, vector<int>> m;
+        unordered_set<int> s;
+        int n = adjacentPairs.size() + 1;
+
+        for (auto &i : adjacentPairs) {
+            m[i[0]].push_back(i[1]);
+            m[i[1]].push_back(i[0]);
+        }
+
+        int temp;
+        for (auto &i : m) {
+            if (i.second.size() == 1) {
+                ret.push_back(i.first);
+                s.insert(i.first);
+                temp = i.first;
+                break;
+            }
+        }
+
+        while (ret.size() < n) {
+            for (auto &i : m[temp]) {
+                if (s.find(i) == s.end()) {
+                    ret.push_back(i);
+                    s.insert(i);
+                    temp = i;
+                    break;
+                }
+            }
+        }
+
+        return ret;
+    }
+};
