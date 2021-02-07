@@ -1,0 +1,17 @@
+class Solution {
+public:
+    bool check(vector<int>& nums) {
+        int i;
+        for (i = 0; i < nums.size() - 1; ++i) {
+            if (nums[i] > nums[i + 1]) break;
+        }
+        if (i == nums.size() - 1) return true;
+
+        for (i++; i < nums.size() - 1; ++i) {
+            if (nums[i] > nums[i + 1]) return false;
+        }
+
+        if (nums[0] < nums[i]) return false;
+        else return true;
+    }
+};
