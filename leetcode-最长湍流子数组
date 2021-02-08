@@ -1,0 +1,58 @@
+class Solution {
+public:
+    int maxTurbulenceSize(vector<int>& arr) {
+        // 法二：动态规划
+        int n = arr.size();
+        vector<int> up(n, 1), down(n, 1);
+
+        for (int i = 1; i < n; ++i) {
+            if (arr[i] < arr[i - 1]) {
+                down[i] = up[i - 1] + 1;
+            } else if (arr[i] > arr[i - 1]) {
+                up[i] = down[i - 1] + 1;
+            } else {
+                continue;
+            }
+        }
+
+        return max(*max_element(up.begin(), up.end()), *max_element(down.begin(), down.end()));
+
+        // 法一：双指针 模拟
+        int n = arr.size();
+        if (n < 2) return n;
+
+        bool k = true;
+        int l, r, ret = 0;
+        for (l = 0, r = 1; r < n;) {
+            if (k) {
+                if (arr[r - 1] > arr[r]) {
+                    r++;
+                    k = !k;
+                } else if (arr[r - 1] < arr[r]) { 
+                    ret = max(ret, r - l);
+                    l = r - 1;
+                    k = !k;
+                } else {
+                    ret = max(ret, r - l);
+                    l = r;
+                    r++;
+                }
+            } else {
+                if (arr[r - 1] > arr[r]) {
+                    ret = max(ret, r - l);
+                    l = r - 1;
+                    k = !k;
+                } else if (arr[r - 1] < arr[r]) { 
+                    r++;
+                    k = !k;
+                } else {
+                    ret = max(ret, r - l);
+                    l = r;
+                    r++;
+                }
+            }
+        }
+
+        return max(ret, r - l);
+    }
+};
