@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int minOperations(string s) {
+        int ret_one = 0, ret_zero = 0;
+        for (int i = 0; i < s.size(); ++i) {
+            if (i % 2 == 0) {
+                if (s[i] != '1') ret_one++;
+            } else {
+                if (s[i] != '0') ret_one++;
+            }
+        }
+        
+        for (int i = 0; i < s.size(); ++i) {
+            if (i % 2 == 1) {
+                if (s[i] != '1') ret_zero++;
+            } else {
+                if (s[i] != '0') ret_zero++;
+            }
+        }
+        
+        return min(ret_zero, ret_one);
+    }
+};
