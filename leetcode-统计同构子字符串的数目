@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int countHomogenous(string s) {
+        long mod = 1e9 + 7, ret = 0;
+        int l = 0, r = 0;
+        
+        for (; r < s.size();) {
+            if (s[l] != s[r]) {
+                ret += (r - l) * ((r - l) + 1) / 2;
+                l = r;
+            } else r++;
+        }
+        ret += long(r - l) * long((r - l) + 1) / 2;
+        return (int)(ret % mod);
+    }
+};
