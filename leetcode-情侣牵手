@@ -1,0 +1,36 @@
+class Djset {
+public:
+    vector<int> parent;
+    vector<int> rank;
+    int count;
+
+    Djset(int n): parent(vector<int>(n)), rank(vector<int>(n)), count(n) {
+        for (int i = 0; i < n; i++) parent[i] = i;
+    }
+    
+    int find(int x) {
+        if (x != parent[x]) parent[x] = find(parent[x]);
+        return parent[x];
+    }
+    
+    void merge(int x, int y) {
+        int rootx = find(x);
+        int rooty = find(y);
+        if (rootx != rooty) {
+            if (rank[rootx] < rank[rooty]) swap(rootx, rooty);
+            parent[rooty] = rootx;
+            count--;
+            if (rank[rootx] == rank[rooty]) rank[rootx] += 1;
+        }
+    }
+};
+
+class Solution {
+public:
+    int minSwapsCouples(vector<int>& row) {
+        int n = row.size();
+        Djset ds(n / 2);
+        for (int i = 0; i < n; i += 2) ds.merge(row[i] / 2, row[i + 1] / 2);
+        return n / 2 - ds.count;
+    }
+};
