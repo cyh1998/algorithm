@@ -1,0 +1,21 @@
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+        vector<int> v(26), w(26);
+        int n = s1.size(), m = s2.size(), l = 0, r = 0;
+        if (n > m) return false;
+
+        for (auto &i : s1) v[i - 'a']++; 
+        for (; r < n; ++r) w[s2[r] - 'a']++;
+
+        for (; r < m; ++l, ++r) {
+            if (v == w) return true;
+            else {
+                w[s2[r] - 'a']++;
+                w[s2[l] - 'a']--;
+            }
+        }
+
+        return v == w ? true : false;
+    }
+};
