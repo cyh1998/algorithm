@@ -1,0 +1,14 @@
+class Solution {
+public:
+    string mergeAlternately(string word1, string word2) {
+        string ret;
+        int i = 0, j = 0;
+        for (; i < word1.size() && j < word2.size(); ++i, ++j) {
+            ret += word1[i];
+            ret += word2[j];
+        }
+        if (i == word1.size()) ret += word2.substr(j, word2.size() - j);
+        else ret += word1.substr(i, word1.size() - i);
+        return ret;
+    }
+};
