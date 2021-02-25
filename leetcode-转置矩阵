@@ -1,0 +1,15 @@
+class Solution {
+public:
+    vector<vector<int>> transpose(vector<vector<int>>& matrix) {
+        int row = matrix.size(), column = matrix[0].size();
+        vector<vector<int>> ret;
+        for (int i = 0; i < column; ++i) {
+            vector<int> temp;
+            for (int j = 0; j < row; ++j) {
+                temp.emplace_back(matrix[j][i]);
+            }
+            ret.emplace_back(temp);
+        }
+        return ret;
+    }
+};
