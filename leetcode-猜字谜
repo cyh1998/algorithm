@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<int> findNumOfValidWords(vector<string>& words, vector<string>& puzzles) {
+        unordered_map<int, int> um;
+        for (auto &s : words) {
+            int temp = 0;
+            for (auto &i : s) temp |= (1 << (i - 'a'));
+            um[temp]++;
+        }
+        
+        int n = puzzles.size();
+        vector<int> ret(n);
+        for (int x = 0; x < n; ++x) {
+            int temp = 0;
+            for (auto &i : puzzles[x]) temp |= (1 << (i - 'a'));
+            
+            for (int j = temp; j; j = (j - 1)&temp) {
+                if ((1 << (puzzles[x][0] - 'a')) & j) ret[x] += um[j];
+            }
+        }
+        return ret;
+    }
+};
