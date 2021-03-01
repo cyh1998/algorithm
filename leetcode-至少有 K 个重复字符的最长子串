@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int longestSubstring(string s, int k) {
+        if (k <= 1) return s.size();
+        if (s.size() < k || s.empty()) return 0;
+
+        vector<int> m(128);
+        for (auto &i : s) m[i]++;
+
+        int index = 0;
+        while (m[s[index]] >= k && index < s.size()) ++index;
+        if (index == s.size()) return index;
+
+        int l = longestSubstring(s.substr(0, index), k);
+        int r = longestSubstring(s.substr(index + 1), k);
+
+        return max(l, r);
+    }
+};
