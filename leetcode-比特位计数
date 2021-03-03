@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<int> bits = {0, 1};
+
+    int largest_power(int N) {
+        N |= (N >> 1);
+        N |= (N >> 2);
+        N |= (N >> 4);
+        N |= (N >> 8);
+        N |= (N >> 16);
+        return (N + 1) >> 1;
+    }
+
+    vector<int> countBits(int num) {
+        int k = bits.size();
+        if (num + 1 <= k) {
+            vector<int> ret(bits.begin(), bits.begin() + num + 1);
+            return ret;
+        } else {
+            for (int i = k; i <= num; ++i) {
+                if ((i & (i - 1)) == 0) {
+                    bits.push_back(1);
+                } else {
+                    int temp = largest_power(i);
+                    bits.push_back(bits[temp] + bits[i - temp]);
+                }
+            }
+        }
+        return bits;
+    }
+};
