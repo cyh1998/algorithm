@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int closestCost(vector<int>& baseCosts, vector<int>& toppingCosts, int target) {
+        int ret, n = toppingCosts.size();
+		sort(baseCosts.begin(), baseCosts.end());
+		sort(toppingCosts.begin(), toppingCosts.end());
+        ret = baseCosts[0];
+
+		for (auto &i : baseCosts) {
+			for (int x = 0; x < pow(3, n); ++x) {
+				int temp = 0, _x = x;
+				for (auto &j : toppingCosts) {
+					temp += (_x % 3) * j;
+					_x /= 3; 
+					if (temp > (target - i)) break;
+				}
+				if (abs(ret - target) > abs(temp + i - target)) ret = temp + i;
+			}
+		}
+		
+		return ret;
+    }
+};
