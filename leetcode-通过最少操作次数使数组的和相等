@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int minOperations(vector<int>& a, vector<int>& b) {
+        int n = a.size(), m = b.size(), l = 0, r = 0, ret = 0;
+        if (min(n, m) * 6 < max(n, m)) return -1;
+        
+        int sa = accumulate(a.begin(), a.end(), 0);
+        int sb = accumulate(b.begin(), b.end(), 0);
+        if (sa < sb) swap(sa, sb), swap(a, b);
+        sort(a.rbegin(), a.rend());
+        sort(b.begin(), b.end());
+		
+		while (sa > sb) {
+			if (l < a.size() && a[l] - 1 >= 6 - b[r]) sa = sa - (a[l++] - 1);
+			else sb = sb + (6 - b[r++]);
+			ret++;
+		}
+
+		return ret;
+    }
+};
