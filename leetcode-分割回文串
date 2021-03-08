@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<vector<string>> ret;
+
+    bool isPalindrome(string s) {
+        int l = 0, r = s.size() - 1;
+        while (l < r) {
+            if (s[l++] != s[r--]) return false;
+        }
+        return true;
+    }
+	
+	void dfs(vector<string> temp, string s) {
+		if (s.size() == 0) {
+			ret.emplace_back(temp);
+			return;
+		}
+
+		for (int i = 1; i <= s.size(); ++i) {
+			string str = s.substr(0, i);
+			if (isPalindrome(str)) {
+				temp.emplace_back(str);
+				dfs(temp, s.substr(i));
+				temp.pop_back();
+			}
+        }
+
+		return;
+	}
+
+    vector<vector<string>> partition(string s) {
+        vector<string> temp;
+        dfs(temp, s);
+        return ret;
+    }
+};
