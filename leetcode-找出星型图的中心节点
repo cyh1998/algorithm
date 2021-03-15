@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int findCenter(vector<vector<int>>& edges) {
+        int n = edges.size();
+        vector<int> v(n + 2);
+        
+        for (auto &i : edges) {
+            ++v[i[0]];
+            ++v[i[1]];
+        }
+        
+        return max_element(v.begin(), v.end()) - v.begin();
+    }
+};
