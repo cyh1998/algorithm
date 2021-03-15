@@ -1,0 +1,24 @@
+class Solution {
+public:
+    double maxAverageRatio(vector<vector<int>>& classes, int extraStudents) {
+        priority_queue<pair<double, int>> q;
+        double ret = 0;
+        int n = classes.size();
+        for (int i = 0; i < n; ++i) {
+            q.emplace(((double)(classes[i][1] - classes[i][0]) / ((double)classes[i][1] * (classes[i][1] + 1))), i);
+        }
+
+        while (extraStudents > 0) {
+            int i = q.top().second;
+            q.pop();
+            ++classes[i][0];
+            ++classes[i][1];
+            q.emplace(((double)(classes[i][1] - classes[i][0]) / ((double)classes[i][1] * (classes[i][1] + 1))), i);
+            --extraStudents;
+        }
+
+        for (auto &i : classes) ret += (double)i[0] / i[1];
+
+        return ret / n;
+    }
+};
