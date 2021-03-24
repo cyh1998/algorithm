@@ -1,0 +1,26 @@
+class Solution {
+public:
+    bool isNumber(string& token) {
+        return !(token == "+" || token == "-" || token == "*" || token == "/");
+    }
+
+    int evalRPN(vector<string>& tokens) {
+        stack<int> ret;
+        for (auto &i : tokens) {
+            if (isNumber(i)) {
+                ret.push(stoi(i));
+            } else {
+                int a = ret.top();
+                ret.pop();
+                int b = ret.top();
+                ret.pop();
+                if (i == "+") ret.push(a + b);
+                else if (i == "-") ret.push(b - a);
+                else if (i == "*") ret.push(a * b);
+                else if (i == "/") ret.push(b / a);
+            }
+        }
+
+        return ret.top();
+    }
+};
