@@ -1,0 +1,70 @@
+class Solution {
+public:
+    int getNumberOfBacklogOrders(vector<vector<int>>& orders) {
+        long ret = 0, mod = 1e9 + 7;
+        priority_queue<pair<int, long>> buy;
+        priority_queue<pair<int, long>, vector<pair<int, long>>, greater<pair<int, long>>> sell;
+        int n = orders.size();
+        
+        for (auto &i : orders) {
+            if (i[2] == 0) { //buy
+                while (!sell.empty()) {
+                    int f = sell.top().first;
+                    int s = sell.top().second;
+                    if (f <= i[0]) {
+                        if (s > i[1]) {
+                            sell.pop();
+                            sell.emplace(f, s - i[1]);
+                            i[1] = 0;
+                        } else if (s == i[1]) {
+                            sell.pop();
+                            i[1] = 0;
+                        } else {
+                            i[1] -= s;
+                            sell.pop();
+                            continue;
+                        }
+                    }
+                    break;
+                }
+                
+                if (i[1] > 0) buy.emplace(i[0], i[1]);
+            } else { //sell
+                while (!buy.empty()) {
+                    int f = buy.top().first;
+                    int s = buy.top().second;
+                    if (f >= i[0]) {
+                        if (s > i[1]) {
+                            buy.pop();
+                            buy.emplace(f, s - i[1]);
+                            i[1] = 0;
+                        } else if (s == i[1]) {
+                            buy.pop();
+                            i[1] = 0;
+                        }  else {
+                            i[1] -= s;
+                            buy.pop();
+                            continue;
+                        }
+                    }
+                    break;
+                }
+                
+                if (i[1] > 0) sell.emplace(i[0], i[1]);
+            }
+        }
+        
+        while (!buy.empty()) {
+            ret += buy.top().second;
+            ret %= mod;
+            buy.pop();
+        }
+        while (!sell.empty()) {
+            ret += sell.top().second;
+            ret %= mod;
+            sell.pop();
+        }
+        
+        return ret;
+    }
+};
