@@ -1,0 +1,12 @@
+class Solution {
+public:
+    int reinitializePermutation(int n) {
+        int ret = 0, k = n / 2, t = 1;
+        do {
+            if (t < k) t = t * 2; 
+            else t = (t - k) * 2 + 1;
+            ++ret;
+        } while (t != 1);
+        return ret;
+    }
+};
