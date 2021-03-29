@@ -1,0 +1,27 @@
+class Solution {
+public:
+    string func (string s) {
+        if (s.size() == 0) return "";
+        int i;
+        for (i = 0; i < s.size(); ++i) if (s[i] != '0') break;
+        if (i == s.size()) return "0";
+        return s.substr(i);
+    }
+    
+    int numDifferentIntegers(string word) {
+        unordered_set<string> uset;
+        int n = word.size(), l, r;
+        for (l = 0, r = 0; r < n; ) {
+            if (isdigit(word[r])) r++;
+            else {
+                string s = func(word.substr(l, r - l));
+                if (s.size() > 0) uset.insert(s);
+                r++;
+                l = r;
+            }
+        }
+        string s = func(word.substr(l, r - l));
+        if (s.size() > 0) uset.insert(s);
+        return uset.size();
+    }
+};
