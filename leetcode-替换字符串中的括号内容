@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string evaluate(string s, vector<vector<string>>& knowledge) {
+        unordered_map<string, string> m;
+        for (auto &i : knowledge) m[i[0]] = i[1];
+        
+        int l, r, k = 0, i, n = s.size();
+        string ret = "";
+        for (i = 0; i < n; ++i) {
+            if (s[i] == '(') {
+                l = i + 1;
+                ret += s.substr(k, i - k);
+            } else if (s[i] == ')') {
+                r = i - 1;
+                k = i + 1;
+                string str = s.substr(l, r - l + 1);
+                if (m.count(str) > 0) ret += m[str];
+                else ret += "?";
+            }
+        }
+        
+        ret += s.substr(k, i - k);
+        return ret;
+    }
+};
