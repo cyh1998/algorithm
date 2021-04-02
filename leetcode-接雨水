@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        stack<int> stk;
+        int ret = 0, n = height.size();
+        for (int i = 0; i < n; ++i) {
+            while (!stk.empty() && height[stk.top()] < height[i]) {
+                int temp = height[stk.top()];
+                stk.pop();
+                if (!stk.empty()) {
+                    ret += (min(height[stk.top()], height[i]) - temp) * (i - stk.top() - 1);
+                }
+            }
+            stk.emplace(i);
+        }
+        return ret;
+    }
+};
