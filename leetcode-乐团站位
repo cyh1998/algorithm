@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int orchestraLayout(int num, int xPos, int yPos) {
+        int q = min(min(xPos - 0, num - 1 - xPos), min(yPos - 0, num - 1 - yPos));
+        long long n = num, ret = 0, tl = q, lr = num - 1 - q;
+        ret = (4 * n - 4 * q) * q;
+        
+        if (xPos == tl) ret = ret + (yPos - tl + 1);
+        else if (yPos == lr) ret = ret + (lr - tl + 1) + (xPos - tl);
+        else if (xPos == lr) ret = ret + (lr - tl + 1) + (lr - tl) + (lr - yPos);
+        else if (yPos == tl) ret = ret + (lr - tl + 1) + (lr - tl) + (lr - tl) + (lr - xPos);
+
+        return (ret - 1) % 9 + 1;
+    }
+};
