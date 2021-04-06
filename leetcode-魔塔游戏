@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int magicTower(vector<int>& nums) {
+        priority_queue<int, vector<int>, greater<int>> q;
+        long long sum = 0;
+        int ret = 0;
+
+        for (auto i : nums) sum += i;
+        if (sum < 0) return -1;
+        
+        sum = 0;
+        for (int i = 0; i < nums.size(); ++i) {
+            sum += nums[i];
+            q.push(nums[i]);
+            if (sum < 0) {
+                sum -= q.top();
+                nums.emplace_back(q.top());
+                q.pop();
+                ++ret;
+            }
+        }
+        return ret;
+    }
+};
