@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool search(vector<int>& nums, int target) {
+        int temp = nums.size(), n = nums.size();
+        for (int i = 0; i < n - 1; ++i) {
+            if (nums[i] > nums[i + 1]) {
+                temp = i + 1;
+                break;
+            }
+        }
+
+        int l, r, mid;
+        if (target < nums[0]) {
+            l = temp;
+            r = n;
+        } else if (target > nums[0]){
+            l = 0;
+            r = temp;
+        } else return true;
+
+        while (l < r) {
+            mid = l + (r - l) / 2;
+            if (nums[mid] == target) return true;
+            else if (nums[mid] < target) l = mid + 1;
+            else if (nums[mid] > target) r = mid;
+        }
+
+        return false;
+    }
+};
