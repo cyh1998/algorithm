@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int findTheWinner(int n, int k) {
+        // 法一：模拟
+        // vector<int> arr(n);
+        // for (int i = 0; i < n; ++i) arr[i] = i + 1;
+        
+        // int i = 0;
+        // while (arr.size() > 1) {
+        //     int pos = (i + k - 1) % arr.size();
+        //     arr.erase(arr.begin() + pos);
+        //     i = pos;
+        // }
+        
+        // return arr[0];
+
+        // 法二：数学法
+        int p = 0;
+        for (int i = 2; i <= n; ++i)
+            p = (p + k) % i;
+        return p + 1;
+    }
+};
