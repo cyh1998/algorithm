@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int minSideJumps(vector<int>& obstacles) {
+        int x = 500001;
+        int n = obstacles.size();
+        vector<vector<int>> dp(3, vector<int>(n));
+        dp[0][0] = 1, dp[2][0] = 1;
+        
+        for (int i = 1; i < n; ++i) {
+            int one = dp[0][i - 1];
+            int two = dp[1][i - 1];
+            int thr = dp[2][i - 1];
+            
+            if (obstacles[i] == 1) {
+                dp[0][i] = x;
+                dp[1][i] = min(min(x + 1, two), thr + 1);
+                dp[2][i] = min(min(x + 1, two + 1), thr);
+            } else if (obstacles[i] == 2) {
+                dp[0][i] = min(min(one, x + 1), thr + 1);
+                dp[1][i] = x;
+                dp[2][i] = min(min(one + 1, x + 1), thr);
+            } else if (obstacles[i] == 3) {
+                dp[0][i] = min(min(one, two + 1), x + 1);
+                dp[1][i] = min(min(one + 1, two), x + 1);
+                dp[2][i] = x;
+            } else {
+                dp[0][i] = min(min(one, two + 1), thr + 1);
+                dp[1][i] = min(min(one + 1, two), thr + 1);
+                dp[2][i] = min(min(one + 1, two + 1), thr);
+            }
+        }
+        
+        return min(min(dp[0][n - 1], dp[1][n - 1]), dp[2][n - 1]);
+    }
+};
