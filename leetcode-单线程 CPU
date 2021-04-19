@@ -1,0 +1,39 @@
+class Solution {
+public:
+    struct cmp{
+        template<typename T, typename U>
+        bool operator()(T const& left, U const &right) {
+            if (left.first == right.first) return left.second > right.second;
+            else return left.first > right.first;
+        }
+    };
+    
+    vector<int> getOrder(vector<vector<int>>& tasks) {
+        vector<int> ret;
+        priority_queue<pair<int, int>, vector<pair<int, int>>, cmp> pq;
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq_t;
+        
+        for (int i = 0; i < tasks.size(); ++i) {
+            pq_t.push(make_pair(tasks[i][0], i));
+        }
+        
+        int time = pq_t.top().first;
+        while (!pq_t.empty()) {
+            if (pq_t.top().first <= time || pq.empty()) {
+                pq.push(make_pair(tasks[pq_t.top().second][1], pq_t.top().second));
+                pq_t.pop();
+            } else {
+                time += pq.top().first;
+                ret.emplace_back(pq.top().second);
+                pq.pop();
+            }
+        }
+        
+        while (!pq.empty()) {
+            ret.emplace_back(pq.top().second);
+            pq.pop();
+        }
+        
+        return ret;
+    }
+};
