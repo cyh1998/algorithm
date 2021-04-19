@@ -1,0 +1,38 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int maxValue(TreeNode* root, int k) {
+		vector<int> dp = dfs(root, k);
+		return *max_element(dp.begin(), dp.end());
+    }
+
+	vector<int> dfs(TreeNode* root, int k) {
+		vector<int> dp(k + 1);
+		if (root == nullptr) return dp;
+
+		vector<int> l = dfs(root->left, k);
+		vector<int> r = dfs(root->right, k);
+
+		for (int i = 0; i <= k; ++i) {
+            for (int j = 0; j <= k; ++j) {
+                dp[0] = max(dp[0], l[i] + r[j]);
+            }
+        }
+		
+		for (int i = 0; i < k; ++i) {
+            for (int j = 0; i + j < k; ++j) {
+                dp[i + j + 1] = max(dp[i + j + 1], l[i] + r[j] + root->val);
+            }
+        }
+
+		return dp;
+	}
+};
