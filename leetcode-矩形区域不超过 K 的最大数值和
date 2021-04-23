@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int maxSumSubmatrix(vector<vector<int>>& matrix, int k) {
+		int ret = INT_MIN;
+		int n = matrix.size(), m = matrix[0].size();
+		vector<vector<int>> sum(n + 1, vector<int>(m + 1));
+		
+		for (int i = 0; i < n; ++i) {
+			for (int j = 0; j < m; ++j) {
+				sum[i + 1][j + 1] = sum[i + 1][j] + sum[i][j + 1] + matrix[i][j] - sum[i][j];
+			}
+		}
+
+		for (int i = 1; i <= n; ++i) {
+			for (int j = 1; j <= m; ++j) {
+				for (int p = 0; p < i; ++p) {
+					for (int q = 0; q < j; ++q) {
+						int num = sum[p][q] - sum[p][j] - sum[i][q] + sum[i][j];
+						if (num <= k) ret = max(ret, num);
+					}
+				}
+			}
+		}
+
+		return ret;
+    }
+};
