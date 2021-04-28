@@ -1,0 +1,11 @@
+class Solution {
+public:
+    bool judgeSquareSum(int c) {
+        int k = sqrt(c);
+        for (int a = 0; a <= k; ++a) {
+            int b = sqrt(c - pow(a, 2));
+            if (pow(a, 2) + pow(b, 2) == c) return true;
+        }
+        return false;
+    }
+};
