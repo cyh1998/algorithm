@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int leastBricks(vector<vector<int>>& wall) {
+        int n = wall.size();
+        unordered_map<int, int> m;
+        
+        for (auto &i : wall) {
+            int w = 0;
+            for (int j = 0; j < i.size() - 1; ++j) {
+                w += i[j];
+                m[w]++;
+            }
+        }
+
+        int ret = 0;
+        for (auto &i : m) {
+            // cout << i.second << endl;
+            ret = max(ret, i.second);
+        }
+        return n - ret;
+    }
+};
