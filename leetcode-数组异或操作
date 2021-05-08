@@ -1,0 +1,12 @@
+class Solution {
+public:
+    int xorOperation(int n, int start) {
+        int ret = start;
+        while (n > 1) {
+            start += 2;
+            ret = ret ^ start;
+            --n;
+        }
+        return ret;
+    }
+};
