@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int func(string num, string tmp) {
+        int ret = 0, n = num.size();
+        for (int i = 0; i < n; ++i) {
+            if (num[i] != tmp[i]) {
+                int j = i + 1;
+                while (num[j] != tmp[i]) j++;
+                for (; j > i; --j) {
+                    swap(num[j], num[j - 1]), ret++;
+                }
+            }
+        }
+        return ret;
+    }
+
+    int getMinSwaps(string num, int k) {
+        string tmp = num;
+        for (int i = 0; i < k; ++i) next_permutation(tmp.begin(), tmp.end());
+        return func(num, tmp);
+    }
+};
