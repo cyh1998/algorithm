@@ -1,0 +1,27 @@
+class Solution {
+public:
+    bool splitString(string s) {
+        int n = s.size();
+        for (int i = 1; i < n; ++i) {
+            unsigned long long num = stoull(s.substr(0, i));
+            if (check(s.substr(i), num - 1)) return true;
+        }
+        return false;
+    }
+    
+    bool check(string s, unsigned long long idx) {
+        if (idx < 0) return false;
+        
+        if (s.size() > 0 && idx == stoull(s)) return true;
+        
+        int n = s.size();
+        for (int i = 1; i < n; ++i) {
+            unsigned long long num = stoull(s.substr(0, i));
+            if (num == idx) {
+                if (check(s.substr(i), num - 1)) return true;
+            } else if (num > idx) return false;
+        }
+        
+        return false;
+    }
+};
