@@ -1,0 +1,78 @@
+class Solution {
+public:
+    // 法一：DFS(超时)
+    // long long mod = 1e9 + 7;
+
+    // long long dfs(int idx, int steps, int len) {
+    //     if (idx < 0 || idx >= len || steps < 0) {
+    //         return 0;
+    //     }
+
+    //     if (steps == 0) {
+    //         if (idx == 0) return 1;
+    //         else return 0;
+    //     }
+
+    //     long long local = dfs(idx, steps - 1, len);
+    //     long long left = dfs(idx - 1, steps - 1, len);
+    //     long long right = dfs(idx + 1, steps - 1, len);
+    //     return (local + left + right) % mod;
+    // }
+
+    // int numWays(int steps, int arrLen) {
+    //     return dfs(0, steps, arrLen);
+    // }
+
+    // 法二：记忆化搜索
+    // long long mod = 1e9 + 7;
+    // map<pair<int, int>, long long> m;
+
+    // long long dfs(int idx, int steps, int len) {
+    //     if (idx < 0 || idx >= len || steps < 0) {
+    //         return 0;
+    //     }
+
+    //     if (m.count(make_pair(idx, steps))) {
+    //         return m[make_pair(idx, steps)];
+    //     }
+
+    //     if (steps == 0) {
+    //         if (idx == 0) {
+    //             m[make_pair(idx, steps)] = 1;
+    //             return 1;
+    //         } else {
+    //             m[make_pair(idx, steps)] = 0;
+    //             return 0;
+    //         }
+    //     }
+
+    //     long long local = dfs(idx, steps - 1, len);
+    //     long long left = dfs(idx - 1, steps - 1, len);
+    //     long long right = dfs(idx + 1, steps - 1, len);
+    //     m[make_pair(idx, steps)] = (local + left + right) % mod;
+    //     return (local + left + right) % mod;
+    // }
+
+    // int numWays(int steps, int arrLen) {
+    //     return dfs(0, steps, arrLen);
+    // }
+
+    // 法三：动态规划
+    long long mod = 1e9 + 7;
+
+    int numWays(int steps, int arrLen) {
+        int l = min(steps, arrLen); //注意减少位置的范围
+        vector<vector<long long>> dp(l, vector<long long>(steps + 1));
+        dp[0][0] = 1;
+        
+        for (int j = 1; j <= steps; ++j) {
+            for (int i = 0; i < l; ++i) {
+                if (i == 0) dp[i][j] = (dp[i][j - 1] + dp[i + 1][j - 1]) % mod;
+                else if (i == l - 1) dp[i][j] = (dp[i - 1][j - 1] + dp[i][j - 1]) % mod;
+                else dp[i][j] = (dp[i - 1][j - 1] + dp[i][j - 1] + dp[i + 1][j - 1]) % mod;
+            }
+        }
+
+        return dp[0][steps];
+    }
+};
